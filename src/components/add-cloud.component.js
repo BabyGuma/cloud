@@ -1,18 +1,22 @@
 import React, { Component } from "react";
-import CloudDataService from "../services/cloud.services";
-
-import "firebase/compat/storage";
+import CloudDataService from "../services/cloud.services"; 
+import "firebase/compat/storage"; 
 import firebase from "firebase/compat/app";
-export const storage = firebase.storage();
+
+export const storage = firebase.storage(); 
 
 export default class AddTutorial extends Component {
   constructor(props) {
     super(props);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.saveTutorial = this.saveTutorial.bind(this);
     this.newTutorial = this.newTutorial.bind(this);
+    this.onChangeFile = this.onChangeFile.bind(this);
+
     this.state = {
+      name: "",
       title: "",
       description: "",
       published: false,
@@ -33,9 +37,7 @@ handleUpload(e, file) {
     e.preventDefault();
     console.log(file);
     alert(file.name);
-
     const uploadTask = storage.ref('/image/'+file.name).put(file);
-
     uploadTask.on("state_changed", console.log, console.error, () =>  {
        storage
             .ref("image")
@@ -48,6 +50,13 @@ handleUpload(e, file) {
     });
 
   }
+
+
+  onChangeName(e) {
+    this.setState({
+        name: e.target.value,
+    });
+}
 
   onChangeTitle(e) {
     this.setState({
@@ -62,6 +71,8 @@ handleUpload(e, file) {
   }
 
   saveTutorial() {
+    let name = this.state.name;
+
     let data = {
       title: this.state.title,
       description: this.state.description,
@@ -69,7 +80,7 @@ handleUpload(e, file) {
       url: this.state.url
     };
 
-    CloudDataService.create(data)
+    CloudDataService.create(data, name)
       .then(() => {
         console.log("Created new item successfully!");
         this.setState({
@@ -83,12 +94,15 @@ handleUpload(e, file) {
 
   newTutorial() {
     this.setState({
+      name: "",
       title: "",
       description: "",
       published: false,
+      url: "",
       submitted: false,
     });
   }
+
   render() { 
     return (
     <div className="submit-form">
@@ -125,6 +139,7 @@ handleUpload(e, file) {
                 name="description"
             />
             </div>
+
             <div>
                 <form onSubmit={ (event) => {
                     this.handleUpload(event, this.state.file)
@@ -132,10 +147,13 @@ handleUpload(e, file) {
                     <input type="file" onChange={(event)=> { 
                         this.onChangeFile(event) 
                     }}/>
+
                     <button disabled={!this.state.file}>upload to firebase</button>
+
                 </form>
                 <img src={this.url} alt="" />
             </div>
+
             <button onClick={this.saveTutorial} className="btn btn-success">
                 Submit
             </button>
@@ -145,4 +163,3 @@ handleUpload(e, file) {
     );
 }
 }
-  

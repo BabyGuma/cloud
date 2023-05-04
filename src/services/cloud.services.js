@@ -1,7 +1,7 @@
 import firebase from "../firebase";
 const db = firebase.collection("/cluds");
 
-class cloudDataService {
+class CloudDataService {
   getAll() {
     return db;
   }
@@ -19,4 +19,5 @@ class cloudDataService {
   }
 }
 
-export default new cloudDataService();
+const cloudDataService = new CloudDataService();
+export default cloudDataService;
