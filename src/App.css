@@ -1,38 +1,113 @@
-.App {
-  text-align: center;
+.submit-form {
+  max-width: 300px;
+  margin: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.comment {
+  display: flex;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.comment img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.comment-body p {
+  margin: 0;
+}
+
+.comment-actions {
+  display: flex;
+  margin-top: 5px;
+}
+
+.comment-action {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.comment-action span {
+  margin-left: 5px;
+}
+
+.comment-action:hover {
+  text-decoration: underline;
+}
+
+/* Estilos de formulario de comentarios */
+
+.comment-form {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.comment-form textarea {
+  margin-bottom: 10px;
+  height: 100px;
+  resize: none;
+  border-radius: 5px;
+  padding: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.comment-form button {
+  background-color: #6495ff;
+  color: rgb(255, 39, 39);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #74ff7e;
+}
+
+.form-group {
+  background-image: url(img/lala.jpg);
+  background-color: #34ff60;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgb(231, 231, 231);
+  color: rgb(122, 235, 255);
+}
+
+.list-row {
+  background-image: url("img/lala.jpg");
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgb(10, 6, 6);
+  color: rgb(229, 212, 212);
+  margin-bottom: 10px;
+}
+
+.list-group-item {
+  background-image: url("img/dede2.jpg");
+  background-color: #1b26ff;
+  padding: 10px;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+}
+
+h2{
+  color: rgb(15, 6, 6);
+  line-height: 9;
+  letter-spacing: 10px;
+  font-size: 70px;
+  text-align: center;
+  background-image: url("img/sipo3.webp");
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-size:contain;
+}
+
+body{
+  background-image: url("img/dede2.jpg");
+  background-color:rgb(49, 198, 198);
 }
