@@ -44,7 +44,7 @@ handleUpload(e, file) {
             .child(file.name)
             .getDownloadURL()
             .then((myurl) =>  {
-              this.state.url=myurl;     
+              this.setState.url=myurl;     
              });
 
     });
