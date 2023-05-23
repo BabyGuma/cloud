@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import KafkaService from "../services/kafka.service";
 
 function saveLike(e, status) {
