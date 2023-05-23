@@ -19,5 +19,5 @@ class KafkaService {
 
 }
 
-const CloudDataService = new CloudDataService();
-export default KafkaService;
+const KafkaDataService = new KafkaDataService();
+export default KafkaDataService;
