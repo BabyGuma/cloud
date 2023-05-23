@@ -19,5 +19,5 @@ class CloudDataService {
   }
 }
 
-const CloudDataService = new CloudDataService();
-export default CloudDataService;
+const cloudDataService = new CloudDataService();
+export default cloudDataService;
