@@ -69,8 +69,8 @@
 }
 
 .form-group {
-  background-image: url(img/lala.jpg);
-  background-color: #34ff60;
+  
+  background-color: #0b130d;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgb(231, 231, 231);
@@ -78,7 +78,7 @@
 }
 
 .list-row {
-  background-image: url("img/lala.jpg");
+  background-image: url("img/ODA.jpg");
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgb(10, 6, 6);
@@ -86,8 +86,7 @@
   margin-bottom: 10px;
 }
 
-.list-group-item {
-  background-image: url("img/dede2.jpg");
+.list-group{
   background-color: #1b26ff;
   padding: 10px;
   border-radius: 5px;
@@ -109,5 +108,6 @@ h2{
 
 body{
   background-image: url("img/dede2.jpg");
+  
   background-color:rgb(49, 198, 198);
 }

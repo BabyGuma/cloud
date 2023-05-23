@@ -80,6 +80,7 @@ export default class CloudList extends Component {
                                     key={index}
                                 >
                                     {tutorial.title}
+                                    <img className="card-img-top image" src={tutorial.url} alt=""></img>
                                 </li>
                             ))}
                     </ul>
