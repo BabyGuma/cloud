@@ -1,6 +1,5 @@
 class KafkaService {
-  //url = 'https://your-kafka-express-service-kafka-adsoftsito.cloud.okteto.net/';
-  url = 'https://hola-service-babyguma.cloud.okteto.net/';
+  url = 'https://kafka-express-service-babyguma.cloud.okteto.net/';
  
   reaction = async (name) => {
    await fetch(this.url + 'like?name=' + name, {
@@ -20,4 +19,5 @@ class KafkaService {
 
 }
 
-export default new KafkaService();
+const CloudDataService = new CloudDataService();
+export default KafkaService;
