@@ -8,7 +8,7 @@ function saveLike(e, status) {
     };
 
     console.log(JSON.stringify(data));
-    KafkaService.reaction("i-love-erick");
+    KafkaService.reaction("i-love-pussy");
     e.preventDefault();
 }
 
