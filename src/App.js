@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Route, Link, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css'
-
-import Addcloud from "./components/add-cloud.component"
 import CloudList from "./components/cloud-list.component";
 import Login from './components/Login';
 
