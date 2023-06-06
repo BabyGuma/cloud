@@ -1,5 +1,5 @@
 class KafkaService {
-   url = 'https://hola-service-babyguma.cloud.okteto.net/';
+   url = 'https://node-producer-service-babyguma.cloud.okteto.net/';
 
    reactionPush = async (data) => {
        await fetch(this.url + 'reaction?userId=' + data.userId + '&objectId=' + data.objectId + '&reactionId=' + data.reactionId  , {
