@@ -5,6 +5,7 @@ import './App.css'
 
 import Addcloud from "./components/add-cloud.component"
 import CloudList from "./components/cloud-list.component";
+import Login from './components/Login';
 
 
 class App extends Component {
@@ -33,7 +34,7 @@ class App extends Component {
           <h2>Cloud Sport</h2>
           <Routes>
             <Route path="/"  element={<CloudList />} />
-            <Route path="add" element={<Addcloud />} />
+            <Route path="add" element={<Login></Login>} />
           </Routes>
         </div>
       </div>

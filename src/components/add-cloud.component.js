@@ -1,90 +1,92 @@
 import React, { Component } from "react";
-import CloudDataService from "../services/cloud.services"; 
-import "firebase/compat/storage"; 
+import CloudDataService from "../services/cloud.services";
 import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import "../components/addcloud.css";
 
-export const storage = firebase.storage(); 
+export const storage = firebase.storage();
 
 export default class AddTutorial extends Component {
   constructor(props) {
     super(props);
-    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.saveTutorial = this.saveTutorial.bind(this);
     this.newTutorial = this.newTutorial.bind(this);
-    this.onChangeFile = this.onChangeFile.bind(this);
+
 
     this.state = {
-      name: "",
       title: "",
       description: "",
       published: false,
       submitted: false,
-      file : null,
-      url : ""
+      file: null,
+      url: "",
+      uploadProgress: 0 // estado para mostrar progreso de subida
     };
   }
 
   onChangeFile(e) {
     console.log(e.target.files[0]);
     this.setState({
-        file : e.target.files[0]
-    })
-}
-
-handleUpload(e, file) {
-    e.preventDefault();
-    console.log(file);
-    alert(file.name);
-    const uploadTask = storage.ref('/image/'+file.name).put(file);
-    uploadTask.on("state_changed", console.log, console.error, () =>  {
-       storage
-            .ref("image")
-            .child(file.name)
-            .getDownloadURL()
-            .then((myurl) =>  {
-              this.setState.url=myurl;     
-             });
-
+      file: e.target.files[0],
     });
-
   }
 
-
-  onChangeName(e) {
-    this.setState({
-        name: e.target.value,
-    });
-}
-
-  onChangeTitle(e) {
-    this.setState({
-        title: e.target.value,
-    });
-}
-
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value,
-    });
+  handleUpLoad(e, file) {
+    e.preventDefault();
+    const uploadTask = storage.ref('/image/' + file.name).put(file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // actualizar el estado con el progreso
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({
+          uploadProgress: progress
+        });
+      },
+      console.error,
+      () => {
+        storage
+          .ref("image")
+          .child(file.name)
+          .getDownloadURL()
+          .then((myurl) => {
+            this.setState({
+              url: myurl
+            }, () => {
+              // si la URL se ha actualizado, guardar en la base de datos
+              if (this.state.url !== "") {
+                this.saveTutorial();
+              }
+            });
+          });
+      }
+    );
   }
 
   saveTutorial() {
-    let name = this.state.name;
+    this.setState({
+      loading: true, // establecer loading en verdadero al iniciar la carga
+      message: "" // borrar cualquier mensaje previo
+    });
 
     let data = {
       title: this.state.title,
       description: this.state.description,
       published: false,
-      url: this.state.url
+      url: this.state.url // asignar la URL al objeto 'data'
     };
 
-    CloudDataService.create(data, name)
+    CloudDataService.create(data)
       .then(() => {
         console.log("Created new item successfully!");
         this.setState({
+          loading: false, // establecer loading en falso al completar la carga
           submitted: true,
+          message: "The clip was uploaded successfully.",
+          progress: 0 // restablecer la barra de progreso
         });
       })
       .catch((e) => {
@@ -92,74 +94,91 @@ handleUpload(e, file) {
       });
   }
 
-  newTutorial() {
+
+  onChangeTitle(e) {
     this.setState({
-      name: "",
-      title: "",
-      description: "",
-      published: false,
-      url: "",
-      submitted: false,
+      title: e.target.value,
     });
   }
 
-  render() { 
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value,
+    });
+  }
+
+  newTutorial() {
+    this.setState({
+      title: "",
+      description: "",
+      published: false,
+      submitted: false,
+      url: ""
+    });
+  }
+
+  render() {
     return (
-    <div className="submit-form">
+      <div className="submit">
         {this.state.submitted ? (
-        <div>
+          <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newTutorial}>
-                Add
+            <button className="btn-success" onClick={this.newClip}>
+              Add
             </button>
-        </div>
+          </div>
         ) : (
-        <div>
-            <div className="form-group">
-                <label htmlFor="title">Title</label>
-                <input
+          <div>
+            <div className="form">
+              <label htmlFor="title">Title</label>
+              <input
                 type="text"
-                className="form-control"
+                className="form-title"
                 id="title"
                 required
                 value={this.state.title}
                 onChange={this.onChangeTitle}
                 name="title"
-                />
+              />
             </div>
-            <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <input
+
+            <div className="form">
+              <label htmlFor="description">Description</label>
+              <input
                 type="text"
-                className="form-control"
+                className="form-description"
                 id="description"
                 required
                 value={this.state.description}
                 onChange={this.onChangeDescription}
                 name="description"
-            />
+              />
             </div>
 
             <div>
-                <form onSubmit={ (event) => {
-                    this.handleUpload(event, this.state.file)
-                    }}>
-                    <input type="file" onChange={(event)=> { 
-                        this.onChangeFile(event) 
-                    }}/>
-
-                    <button disabled={!this.state.file}>upload to firebase</button>
-
-                </form>
-                <img src={this.url} alt="" />
+              <form
+                onSubmit={(event) => {
+                  this.handleUpLoad(event, this.state.file);
+                }}
+              >
+                <input
+                  type="file"
+                  onChange={(event) => {
+                    this.onChangeFile(event);
+                  }}
+                />
+                <button disabled={!this.state.file}>Agregar</button>
+              </form>
+              {/* mostrar estado de carga */}
+              {this.state.uploadProgress > 0 && (
+                <div>Subiendo imagen: {this.state.uploadProgress}%</div>
+              )}
+              <img src={this.state.url} alt="" />
             </div>
 
-            <button onClick={this.saveTutorial} className="btn btn-success">
-                Submit
-            </button>
-        </div>
+          </div>
         )}
-    </div>
+      </div>
     );
-}
+  }
 }

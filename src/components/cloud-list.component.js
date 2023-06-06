@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import CloudDataService from "../services/cloud.services";
-import Tutorial from './cloud.component';
+import Cloud from "./cloud.component";
+import Reactions from "./reactions.component";
+import CommentBox from "./comments.component";
 
 export default class CloudList extends Component {
     constructor(props) {
@@ -61,15 +63,13 @@ export default class CloudList extends Component {
     }
 
 
-    // ...
-
     render() {
         const { tutorials, currentTutorial, currentIndex } = this.state;
 
         return (
             <div className="list-row">
-                <div className="col-md-6 bg-dark mx-auto">
-                    <h4>Lista de mejores jugadores</h4>
+                <div className="col-md-6 bg-white">
+                    <h4>Lista de jugadores</h4>
 
                     <ul className="list-group">
                         {tutorials &&
@@ -80,25 +80,36 @@ export default class CloudList extends Component {
                                     key={index}
                                 >
                                     {tutorial.title}
-                                    <img className="card-img-top image" src={tutorial.url} alt=""></img>
+                                    <tr>
+                                        {tutorial.description}
+                                    </tr>
+                                    <img src={tutorial.url} width="540" height="280" alt=""/>
+                                    <tr>
+                                        <Reactions id={tutorial.id}></Reactions>
+                                    </tr>
+                                    <tr>
+                                        <CommentBox id={tutorial.id}></CommentBox>
+                                    </tr>
+
+
                                 </li>
                             ))}
                     </ul>
                 </div>
-                <div className="col-md-6 bg-dark mx-auto" >
+                <div className="col-md-6 bg-white" >
                     {currentTutorial ? (
-                        <Tutorial
+                        <Cloud
                             tutorial={currentTutorial}
                             refreshList={this.refreshList}
                         />
                     ) : (
                         <div>
                             <br />
-                            <p>Please click on a Cloud Sport to see the best athletes of each sport...</p>
+                            <p>Please click on a Flower...</p>
                         </div>
                     )}
                 </div>
             </div>
         );
     }
-  }
+}

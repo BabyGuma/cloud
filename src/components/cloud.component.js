@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CloudDataService from "../services/cloud.services";
 import Reactions from './reactions.component';
-import CommentBox from './comments.component'
+import CommentBox from "./comments.component";
 
 export default class Tutorial extends Component {
     constructor(props) {
@@ -184,8 +184,11 @@ export default class Tutorial extends Component {
                         </button>
                         <p>{this.state.message}</p>
 
-                        <Reactions />
-                        <CommentBox />
+                        <Reactions 
+                        id={currentTutorial.id}/>
+                        <CommentBox>
+                            id={currentTutorial.id}/</CommentBox>
+                      
                     </div>
                 ) : (
                     <div>
