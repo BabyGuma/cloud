@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from "react";
-import '../reactions.css';
+import React, { useState, useEffect } from "react";
+import '../reactions.css'
 import KafkaService from "../services/kafka.service";
 import axios from 'axios';
 
@@ -11,11 +11,10 @@ const Reactions = ({ id }) => {
   const [SadCount, setSadCount] = useState(0);
   const [WowCount, setWowCount] = useState(0);
   const uri = "https://api-mongo-service-gumanco-babyguma.cloud.okteto.net/api/reactions"
-  
-  // eslint-disable-next-line
+
   useEffect(() => {
     fetchReactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line
   }, []);
 
   const fetchReactions = async (r) => {
